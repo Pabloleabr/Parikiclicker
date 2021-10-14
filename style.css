@@ -10,11 +10,19 @@ body{
 }
 #clickZone{
   width: 60vw;
-  
+  height: 90vh;
 }
 #score{
   font-size: xx-large;
-  transform: translateX(30vw);
+  transform: translateX(10vw);
   z-index: 1;
   height: 10px;
+  text-align: center;
+  width: 40vw;
+  user-select: none;/*para que no se seleccione al clickear*/
+}
+
+.upgradeButtons{
+  width: -webkit-fill-available;
+  user-select: none;
 }
