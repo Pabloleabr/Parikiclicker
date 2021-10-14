@@ -1,0 +1,13 @@
+
+body{
+  margin: 0;
+  display: flex;
+}
+.margin{
+  background-color: gainsboro;
+  width: 20vw;
+  height: 100vh;
+}
+#clickZone{
+  width: 60vw;
+}
