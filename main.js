@@ -2,7 +2,6 @@
 const bMenu = document.getElementById("buttonMenu");
 const Canvas = document.getElementById("clickZone");
 const Score = document.getElementById("score");
-const COSTMULTI = 0.2;
 const Game = {
     pFuerza: 0,
     clickPower: 1,
@@ -35,7 +34,8 @@ Canvas.onclick  = () =>{
 
 //esto seria un ejemplo de un boton basico que sube la fuerza 
 //asigana el valor del coste en el objeto Game
-buttonDeUnKg = createButton("+1kg", Game.cost1kg,function(){
+buttonDeUnKg = createButton("+1kg", Game.cost1kg, COSTMULTI, function(){
+    let COSTMULTI = 0.5;
     if(Game.pFuerza>=Game.cost1kg){//si tienes su coste te deja comprarlo
         Game.clickPower +=0.2;
         Game.pFuerza -=Game.cost1kg;
