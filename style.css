@@ -10,4 +10,11 @@ body{
 }
 #clickZone{
   width: 60vw;
+  
+}
+#score{
+  font-size: xx-large;
+  transform: translateX(30vw);
+  z-index: 1;
+  height: 10px;
 }
