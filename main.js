@@ -6,9 +6,10 @@ const Game = {
     pFuerza: 0,
     clickPower: 1,
     cost1kg : 20,
+    costProtes : 50,
 }
 /*
-* Esta funcion toma un strings un number y una funcion como parametros
+* Esta funcion toma un strings, un coste inicial y una funcion como parametros
 * la funcion es la que se ejecutaria en el onclick y decuelce el elemento
 * button construido.
 */
@@ -24,7 +25,7 @@ function createButton(upgradeName, cost, onclickFunction){
 }
 
 function setScore(){
-    Score.innerText= Math.floor(Game.pFuerza* 100) / 100;
+    Score.innerText= "Puntos de Fuerza: " + Math.floor(Game.pFuerza* 100) / 100;
 }
 
 Canvas.onclick  = () =>{
@@ -32,19 +33,37 @@ Canvas.onclick  = () =>{
     setScore();
 }
 
-//esto seria un ejemplo de un boton basico que sube la fuerza 
-//asigana el valor del coste en el objeto Game
-buttonDeUnKg = createButton("+1kg", Game.cost1kg, COSTMULTI, function(){
-    let COSTMULTI = 0.5;
+/*
+esto seria un ejemplo de un boton basico que sube la fuerza 
+asigana el valor del coste en el objeto Game
+La variable CONSTMULTI sirve para incrementar el precio de la mejora
+*/
+buttonDeUnKg = createButton("+1kg", Game.cost1kg, function(){
+    let COSTMULTI=0.5;
     if(Game.pFuerza>=Game.cost1kg){//si tienes su coste te deja comprarlo
         Game.clickPower +=0.2;
         Game.pFuerza -=Game.cost1kg;
         Game.cost1kg += Game.cost1kg*COSTMULTI;
     }
 });
+
+buttonDeProtes = createButton("Batido de proteínas", Game.costProtes, function(){
+    let COSTMULTI=2;
+    if(Game.pFuerza>=Game.costProtes){//si tienes su coste te deja comprarlo
+        Game.clickPower +=0.2; //Gana pasivamente puntos de fuerza (hay que cambiarlo)
+        Game.pFuerza -=Game.costProtes;
+        Game.costProtes += Game.costProtes*COSTMULTI;
+    }
+});
 bMenu.appendChild(buttonDeUnKg);
+bMenu.appendChild(buttonDeProtes);
 
 setInterval(() => {
-    buttonDeUnKg.childNodes[3].innerText = Game.cost1kg;
+    buttonDeUnKg.childNodes[3].innerText = (Game.cost1kg).toFixed(2);
+    setScore();
+},500);
+
+setInterval(() => {
+    buttonDeProtes.childNodes[3].innerText = (Game.costProtes).toFixed(2);
     setScore();
 },500);
