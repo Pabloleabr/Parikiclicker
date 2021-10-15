@@ -10,7 +10,7 @@ let Game ={//donde se guardan los datos del juego
     cost1kg : 20,
     costProtes : 50,
     numProtes : 0,
-    protesPower : 0.25,
+    protesPower : 0.05,
 } 
 if( localStorage.length != 0){//te carga los datos guardados
     Game = JSON.parse(localStorage.getItem("Game"));
@@ -32,7 +32,7 @@ function createButton(upgradeName, cost, onclickFunction){
 }
 
 function setScore(){//funcion que te actualiza los pFuerza
-    Score.innerText= "Puntos de Fuerza: " + Game.pFuerza.toFixed(0);
+    Score.innerText= "Puntos de Fuerza: " + Game.pFuerza.toFixed(1);
 }
 
 Canvas.onclick  = () =>{
