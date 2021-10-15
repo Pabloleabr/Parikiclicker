@@ -11,7 +11,7 @@ const Game = {
 /*
 * Esta funcion toma un strings un number y una funcion como parametros
 * la funcion es la que se ejecutaria en el onclick y decuelce el elemento
-* button construido.
+* button construido. P
 */
 function createButton(upgradeName, cost, onclickFunction){
     let b = document.createElement("button");

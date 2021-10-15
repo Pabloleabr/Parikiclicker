@@ -19,7 +19,7 @@ body{
   height: 10px;
   text-align: center;
   width: 40vw;
-  user-select: none;/*para que no se seleccione al clickear*/
+  user-select: none;/*para que no se seleccione al clickear P*/
 }
 
 .upgradeButtons{
