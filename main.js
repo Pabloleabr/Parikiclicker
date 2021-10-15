@@ -2,11 +2,14 @@
 const bMenu = document.getElementById("buttonMenu");
 const Canvas = document.getElementById("clickZone");
 const Score = document.getElementById("score");
+const COSTMULTI=0.5;
 const Game = {
     pFuerza: 0,
     clickPower: 1,
     cost1kg : 20,
     costProtes : 50,
+    numProtes : 0,
+    protesPower : 0.25,
 }
 /*
 * Esta funcion toma un strings, un coste inicial y una funcion como parametros
@@ -25,7 +28,7 @@ function createButton(upgradeName, cost, onclickFunction){
 }
 
 function setScore(){
-    Score.innerText= "Puntos de Fuerza: " + Math.floor(Game.pFuerza* 100) / 100;
+    Score.innerText= "Puntos de Fuerza: " + Game.pFuerza.toFixed(0);
 }
 
 Canvas.onclick  = () =>{
@@ -39,7 +42,6 @@ asigana el valor del coste en el objeto Game
 La variable CONSTMULTI sirve para incrementar el precio de la mejora
 */
 buttonDeUnKg = createButton("+1kg", Game.cost1kg, function(){
-    let COSTMULTI=0.5;
     if(Game.pFuerza>=Game.cost1kg){//si tienes su coste te deja comprarlo
         Game.clickPower +=0.2;
         Game.pFuerza -=Game.cost1kg;
@@ -48,9 +50,8 @@ buttonDeUnKg = createButton("+1kg", Game.cost1kg, function(){
 });
 
 buttonDeProtes = createButton("Batido de proteínas", Game.costProtes, function(){
-    let COSTMULTI=2;
     if(Game.pFuerza>=Game.costProtes){//si tienes su coste te deja comprarlo
-        Game.clickPower +=0.2; //Gana pasivamente puntos de fuerza (hay que cambiarlo)
+        Game.numProtes++;
         Game.pFuerza -=Game.costProtes;
         Game.costProtes += Game.costProtes*COSTMULTI;
     }
@@ -59,11 +60,9 @@ bMenu.appendChild(buttonDeUnKg);
 bMenu.appendChild(buttonDeProtes);
 
 setInterval(() => {
-    buttonDeUnKg.childNodes[3].innerText = (Game.cost1kg).toFixed(2);
+    buttonDeUnKg.childNodes[3].innerText = (Game.cost1kg).toFixed(0);
+    buttonDeProtes.childNodes[3].innerText = (Game.costProtes).toFixed(0);
+    Game.pFuerza += Game.protesPower*Game.numProtes;
     setScore();
 },500);
 
-setInterval(() => {
-    buttonDeProtes.childNodes[3].innerText = (Game.costProtes).toFixed(2);
-    setScore();
-},500);
