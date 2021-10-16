@@ -11,6 +11,8 @@ body{
 #clickZone{
   width: 60vw;
   height: 90vh;
+  display: flex;
+  justify-content: center;
 }
 #score{
   font-size: xx-large;
@@ -22,9 +24,20 @@ body{
   user-select: none;/*para que no se seleccione al clickear P*/
   
 }
-
+#mainImg{
+  max-width: 60vh;
+  width: fit-content;
+  height: fit-content;
+  margin-top: 30vh;
+  user-select: none;
+}
 .upgradeButtons{
   width: -webkit-fill-available;
+  padding: 1vw;
+  user-select: none;
+}
+.dataButtons{
+  width: 10vw;
   padding: 1vw;
   user-select: none;
 }
