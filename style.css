@@ -18,6 +18,7 @@ body{
   height: 90vh;
   display: flex;
   justify-content: center;
+  user-select: none;
 }
 #score{
   font-size: xx-large;
@@ -35,6 +36,8 @@ body{
   height: fit-content;
   margin-top: 30vh;
   user-select: none;
+  cursor: pointer;
+  -webkit-user-drag: none;
 }
 .upgradeButtons{
   width: -webkit-fill-available;
@@ -72,4 +75,30 @@ body{
 .dataButtons:hover{
   background-color: var(--bBackColorH);
   
+}
+
+.popUpOnClick{
+  color: rgb(206, 82, 33);
+  user-select: none;
+  pointer-events: none;
+  font-size: x-large;
+  animation: popUp 1s ease-out;
+}
+@keyframes popUp {
+  
+  100%{transform: translate(15px,-50px);}
+}
+@media screen and (max-width: 450px){
+  #left{
+    width: 0;
+  }
+  #clickZone{
+    width: 70vw;
+  }
+  #right{
+    width: 30vw;
+  }
+  .dataButtons{
+    width: 30vw;
+  }
 }

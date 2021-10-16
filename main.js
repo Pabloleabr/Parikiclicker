@@ -50,6 +50,18 @@ function insuficientePuntos(button, pagoEfectuado){
     }, 1000);
 }
 
+function popUpOnClick(event) {
+    let p = document.createElement('p');
+    p.innerHTML = "+" + Game.clickPower.toFixed(1);
+    //Set CSS styles so it appears where you clicked (Top left corner)
+    p.className = "popUpOnClick";
+    p.style.position = 'absolute';
+    p.style.left     = event.clientX + 'px';
+    p.style.top      = (event.clientY-40) + 'px';
+    
+    document.body.appendChild(p);
+    setTimeout(()=>document.body.removeChild(p),1000);
+  }
 /*
 esto seria un ejemplo de un boton basico que sube la fuerza 
 asigana el valor del coste en el objeto Game
@@ -93,11 +105,12 @@ bMenu.appendChild(buttonReset);
 bMenu.appendChild(buttonDeUnKg);
 bMenu.appendChild(buttonDeProtes);
 
-clickZone.onclick  = () =>{
+clickZone.onclick  = (e) =>{
     Game.pFuerza+= Game.clickPower;
     setScore();
     let img = mainImg.src.split("/");
-    img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";  
+    img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";
+    popUpOnClick(e);  
 }
 
 setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos del navegador
