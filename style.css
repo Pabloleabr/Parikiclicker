@@ -1,4 +1,9 @@
 
+:root{
+  --bBackColor : white;
+  --bBackColorH : #55555556;
+}
+
 body{
   margin: 0;
   display: flex;
@@ -33,11 +38,38 @@ body{
 }
 .upgradeButtons{
   width: -webkit-fill-available;
-  padding: 1vw;
+  background-color: var(--bBackColor);
+  color: black;
+  border: 1px solid var(--bBackColorH);
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
   user-select: none;
+
+}
+.upgradeButtons:hover{
+  background-color: var(--bBackColorH);
+  
 }
 .dataButtons{
   width: 10vw;
-  padding: 1vw;
+  background-color: var(--bBackColor);
+  color: black;
+  border: 1px solid var(--bBackColorH);
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
   user-select: none;
+}
+.dataButtons:hover{
+  background-color: var(--bBackColorH);
+  
 }

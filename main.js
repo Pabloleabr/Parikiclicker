@@ -41,29 +41,26 @@ function setScore(){//funcion que te actualiza los pFuerza
     Score.innerText= "Puntos de Fuerza: " + Game.pFuerza.toFixed(1);
 }
 
-clickZone.onclick  = () =>{
-    Game.pFuerza+= Game.clickPower;
-    setScore();
-}
-
-function insuficientePuntos(button, pagoEfectuado){//cambia el color del coste
+//cambia el color del coste
+function insuficientePuntos(button, pagoEfectuado){
     pagoEfectuado ? button.childNodes[3].style.color = "green" : button.childNodes[3].style.color = "red";
     //anyadir animacion al pulsar alomejor
     setTimeout(() => {
         button.childNodes[3].style.color = "black";
     }, 1000);
 }
+
 /*
 esto seria un ejemplo de un boton basico que sube la fuerza 
 asigana el valor del coste en el objeto Game
 La variable CONSTMULTI sirve para incrementar el precio de la mejora
 (Tener en cuenta que se ha cambiado para que ne le nombre haya que poner 
-\ncost: para que se muestre el coste ya que asi tiene mas flexibilidad 
-a la hora de que boton crear)
-*/
-buttonDeUnKg = createButton("+1kg \ncost: ", Game.cost1kg, "upgradeButtons", function(){
-    let comp = Game.pFuerza>=Game.cost1kg;
-    if(comp){//si tienes su coste te deja comprarlo
+    \ncost: para que se muestre el coste ya que asi tiene mas flexibilidad 
+    a la hora de que boton crear)
+    */
+   buttonDeUnKg = createButton("+1kg \ncost: ", Game.cost1kg, "upgradeButtons", function(){
+       let comp = Game.pFuerza>=Game.cost1kg;
+       if(comp){//si tienes su coste te deja comprarlo
         Game.clickPower +=0.2;
         Game.pFuerza -=Game.cost1kg;
         Game.cost1kg += Game.cost1kg*COSTMULTI;
@@ -91,10 +88,17 @@ buttonReset = createButton("Reset", "", "dataButtons", function(){
 })
 //zona donde se agrega todos los botones
 //IMPORTANTE el orden en que se agregan es en que aparecen!
-bMenu.appendChild(buttonDeUnKg);
-bMenu.appendChild(buttonDeProtes);
 bMenu.appendChild(buttonGuardar);
 bMenu.appendChild(buttonReset);
+bMenu.appendChild(buttonDeUnKg);
+bMenu.appendChild(buttonDeProtes);
+
+clickZone.onclick  = () =>{
+    Game.pFuerza+= Game.clickPower;
+    setScore();
+    let img = mainImg.src.split("/");
+    img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";  
+}
 
 setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos del navegador
     buttonDeUnKg.childNodes[3].innerText = (Game.cost1kg).toFixed(0);
@@ -104,7 +108,9 @@ setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos d
 },100);
 
 setInterval(()=>{
-    let img = mainImg.src.split("/");
-    img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";  
+    if(Game.numProtes > 0){
+        let img = mainImg.src.split("/");
+        img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";  
+    }
 },2000)
 
