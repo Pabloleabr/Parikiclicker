@@ -52,6 +52,7 @@ body{
   transition-duration: 0.4s;
   cursor: pointer;
   user-select: none;
+  position: relative;
 
 }
 .upgradeButtons:hover{
@@ -78,15 +79,41 @@ body{
 }
 
 .popUpOnClick{
-  color: rgb(206, 82, 33);
+  color: #ce5221;
   user-select: none;
   pointer-events: none;
   font-size: x-large;
   animation: popUp 1s ease-out;
 }
-@keyframes popUp {
+
+.infoBox{
+  display: none;
+  position: absolute;
+  background-color:rgb(26, 26, 26);
+  min-width: 18.3vw;
+  box-shadow: 0px 8px 16px 0px rgb(0,0,0,0.5);
+  transform: translate(-20vw, -5vh);
+  z-index: 1;
   
+}
+.infoBox p{
+  color: white;
+  padding: 8px 12px;
+  margin: 0%;
+  display: block;
+}
+
+.upgradeButtons:hover .infoBox{
+  display: block;
+}
+
+@keyframes popUp {
   100%{transform: translate(15px,-50px);}
+}
+@media screen and (max-width: 980px) {
+  .dataButtons{
+    width: 20vw;
+  }
 }
 @media screen and (max-width: 450px){
   #left{
@@ -98,7 +125,11 @@ body{
   #right{
     width: 30vw;
   }
+  .infoBox{
+    transform: translate(-30vw, -5vh);
+  }
   .dataButtons{
     width: 30vw;
   }
+
 }

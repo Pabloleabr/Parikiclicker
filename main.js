@@ -9,11 +9,15 @@ let Game ={//donde se guardan los datos del juego
     pFuerza: 0,
     clickPower: 1,
     cost1kg : 20,
+    numKg : 0,
     costProtes : 50,
     numProtes : 0,
     protesPower : 0.05,
+    numCadenas : 0,
+    costCadenas : 100,
 } 
 if( localStorage.length != 0){//te carga los datos guardados
+    //hay que modificarlo ya que si se anyade algo nuevo estos datos faltarian asi que necesita ser arreglado
     loadData();
 }
 
@@ -22,18 +26,29 @@ function loadData(){
 }
 
 /*
-* Esta funcion toma un strings, un coste inicial, una classe para el buton y una funcion como parametros
+* Esta funcion toma dos strings,el numero actual (uno de los valores num de Game),
+* un coste inicial, una classe para el buton y una funcion como parametros
 * la funcion es la que se ejecutaria en el onclick y decuelce el elemento
 * button construido. 
 */
-function createButton(upgradeName, cost, bClass, onclickFunction){
+function createButton(upgradeName, description,numero, cost, bClass, onclickFunction){
     let b = document.createElement("button");
     let sp = document.createElement("span");
+    let infBox = document.createElement("div");
+    let p = document.createElement("p");
+    let num = document.createElement("p");
+    num.innerText = "Tienes: " + numero;
+    num.style.color = "#ce5221";
+    infBox.className ="infoBox";
+    p.innerText = description;
+    infBox.appendChild(p);
+    infBox.appendChild(num);
     sp.innerText = cost;
     b.innerText = upgradeName;
     b.appendChild(sp);
     b.onclick = onclickFunction;
     b.className = bClass;
+    b.appendChild(infBox);
     return b
 }
 
@@ -62,48 +77,70 @@ function popUpOnClick(event) {
     document.body.appendChild(p);
     setTimeout(()=>document.body.removeChild(p),1000);
   }
+
 /*
 esto seria un ejemplo de un boton basico que sube la fuerza 
 asigana el valor del coste en el objeto Game
 La variable CONSTMULTI sirve para incrementar el precio de la mejora
 (Tener en cuenta que se ha cambiado para que ne le nombre haya que poner 
-    \ncost: para que se muestre el coste ya que asi tiene mas flexibilidad 
-    a la hora de que boton crear)
-    */
-   buttonDeUnKg = createButton("+1kg \ncost: ", Game.cost1kg, "upgradeButtons", function(){
-       let comp = Game.pFuerza>=Game.cost1kg;
-       if(comp){//si tienes su coste te deja comprarlo
-        Game.clickPower +=0.2;
-        Game.pFuerza -=Game.cost1kg;
-        Game.cost1kg += Game.cost1kg*COSTMULTI;
-    }
+\ncost: para que se muestre el coste ya que asi tiene mas flexibilidad 
+a la hora de que boton crear)
+*/
+buttonDeUnKg = createButton("+1kg \ncost: ","Añade 1Kg de peso (+0.2 al pulsar)", Game.numKg, Game.cost1kg, "upgradeButtons", function(){
+    let comp = Game.pFuerza>=Game.cost1kg;
+    if(comp){//si tienes su coste te deja comprarlo
+    Game.clickPower +=0.2;
+    Game.pFuerza -=Game.cost1kg;
+    Game.cost1kg += Game.cost1kg*COSTMULTI;
+    Game.numKg++;
+    buttonDeUnKg.childNodes[3].innerText = (Game.cost1kg).toFixed(0);
+    buttonDeUnKg.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numKg;
+}
     insuficientePuntos(buttonDeUnKg,comp);
 });
-buttonDeProtes = createButton("Batido de proteínas \ncost: ", Game.costProtes, "upgradeButtons", function(){
+buttonDeProtes = createButton("Batido de proteínas \ncost: ","Gracias a sus proteinas ahora ganas fuerza pasivamente (+0.5 PF/s)",
+    Game.numProtes, Game.costProtes, "upgradeButtons", function(){
     let comp = Game.pFuerza>=Game.costProtes;
     if(comp){//si tienes su coste te deja comprarlo
         Game.numProtes++;
         Game.pFuerza -=Game.costProtes;
         Game.costProtes += Game.costProtes*COSTMULTI;
+        buttonDeProtes.childNodes[3].innerText = (Game.costProtes).toFixed(0);
+        buttonDeProtes.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numProtes;
     }
-    insuficientePuntos(buttonDeProtes,comp);
+        insuficientePuntos(buttonDeProtes,comp);
 });
-buttonGuardar = createButton("Guardar", "", "dataButtons", function(){
+buttonGuardar = createButton("Guardar","", "","", "dataButtons", function(){
     localStorage.setItem("Game", JSON.stringify(Game));
 });
-buttonReset = createButton("Reset", "", "dataButtons", function(){
+buttonReset = createButton("Reset","", "","", "dataButtons", function(){
     let conf = confirm("Estas seguro de que quieres resetear tu datos una vez borrados no se podran recuperar!!");
     if(conf){
         localStorage.clear();
         location.reload();
     }
 })
+buttonDeCadenas = createButton("Cadenas \ncost: ","Ahora levantas cadenas de hierro (+1.2 al pulsar)",
+                                Game.numCadenas, Game.costCadenas, "upgradeButtons", function()
+{
+    let comp = Game.pFuerza>=Game.costCadenas;
+    if(comp){//si tienes su coste te deja comprarlo
+    Game.clickPower +=1.2;
+    Game.pFuerza -=Game.costCadenas;
+    Game.costCadenas += Game.costCadenas*COSTMULTI;
+    Game.numCadenas++;
+    buttonDeCadenas.childNodes[3].innerText = (Game.costCadenas).toFixed(0);
+    buttonDeCadenas.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numCadenas;
+    }
+    insuficientePuntos(buttonDeCadenas,comp);
+});
 //zona donde se agrega todos los botones
 //IMPORTANTE el orden en que se agregan es en que aparecen!
 bMenu.appendChild(buttonGuardar);
 bMenu.appendChild(buttonReset);
 bMenu.appendChild(buttonDeUnKg);
 bMenu.appendChild(buttonDeProtes);
+bMenu.appendChild(buttonDeCadenas);
 
 clickZone.onclick  = (e) =>{
     Game.pFuerza+= Game.clickPower;
@@ -113,17 +150,17 @@ clickZone.onclick  = (e) =>{
     popUpOnClick(e);  
 }
 
-setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos del navegador
-    buttonDeUnKg.childNodes[3].innerText = (Game.cost1kg).toFixed(0);
-    buttonDeProtes.childNodes[3].innerText = (Game.costProtes).toFixed(0);
+setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos
     Game.pFuerza += Game.protesPower*Game.numProtes;
     setScore();
 },100);
 
-setInterval(()=>{
+setInterval(()=>{//animacion de presbanca
     if(Game.numProtes > 0){
         let img = mainImg.src.split("/");
         img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";  
     }
 },2000)
 
+//recordatorio si algunos datos no te cargan bien prueba a hacer reset o localstorage.clear()
+console.log("recordatorio si algunos datos no te cargan bien prueba a hacer reset o localstorage.clear()");
