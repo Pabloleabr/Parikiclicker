@@ -129,7 +129,10 @@ body{
   #left{
     width: 0px;
   }
-  #clickZone{
+  :root{
+    --centerWidth : 70vw;
+  }
+  main{
     width: 70vw;
   }
   #right{
