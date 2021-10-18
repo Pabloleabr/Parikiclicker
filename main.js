@@ -22,6 +22,7 @@ let Game ={//donde se guardan los datos del juego
     costSentadillas : 1000,
     numSentadillas : 0,
     critico : 0,
+    pasivo : 0,
 } 
 if( localStorage.length != 0){//te carga los datos guardados
     //hay que modificarlo ya que si se anyade algo nuevo estos datos faltarian asi que necesita ser arreglado
@@ -165,7 +166,7 @@ buttonDeSentadillas = createButton("Sentadillas \ncost: ","Te clonas para hacer 
         Game.costSentadillas += Game.costSentadillas*COSTMULTI;
         buttonDeSentadillas.childNodes[3].innerText = (Game.costSentadillas).toFixed(0);
         buttonDeSentadillas.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numSentadillas;
-        //5% de critico se llama en clickzone.onclick
+        //1% de critico se llama en clickzone.onclick
     }
         
         insuficientePuntos(buttonDeSentadillas,comp);
@@ -189,7 +190,7 @@ clickZone.onclick  = (e) =>{
     imgS[imgS.length-1] == "sentadillas1.png" ? imgSentadillas.src = "img/sentadillas2.png" :  imgSentadillas.src = "img/sentadillas1.png";
     popUpOnClick(e);
     //Critico:  
-    if (((Math.random() * 100 + Game.critico).toFixed(0)) >= 100){
+    if (((Math.random() * 100 + Game.critico).toFixed(0)) >= 100 && Game.critico > 0){
         Game.pFuerza += Game.clickPower * 100;
     }
     else{
@@ -197,9 +198,11 @@ clickZone.onclick  = (e) =>{
     }
 
     }
+//Calcular ganancias pasivas para poder mostrarlas al usuario. Usamos la variable pasivo y actualizamos   
 
 setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos
-    Game.pFuerza += Game.protesPower*Game.numProtes + Game.animePower*Game.numAnime;
+    Game.pFuerza += Game.pasivo;
+    Game.pasivo = (Game.protesPower*Game.numProtes + Game.animePower*Game.numAnime);
     setScore();
 },100);
 
@@ -215,6 +218,9 @@ setInterval(()=>{//animacion de presbanca
     }
 },2000)
 
-
+//Mostrar las mejoras
+setInterval(() => {document.getElementById("upgrades").innerHTML =`Puntos de Fuerza/Click: ${Game.clickPower.toFixed(1)}\n
+                                                                    Ganacias pasivas: ${Game.pasivo.toFixed(1)}\n`;
+}, 500)
 //recordatorio si algunos datos no te cargan bien prueba a hacer reset o localStorage.clear()
 console.log("recordatorio si algunos datos no te cargan bien prueba a hacer reset o localStorage.clear()");

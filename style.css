@@ -22,13 +22,25 @@ body{
   display: flex;
   justify-content: center;
   user-select: none;
+  position: sticky;
 }
 #upgrades{
-  width: calc(var(--centerWidth) - 1vh ) ;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  display: block;
+  height: 5vh;
+  font-size: large;
+/*   width: calc(var(--centerWidth) - 1vh ) ;
   height: 5vh;
   background-color: black;
   border: #555555 solid 0.5vh;
-}
+*/
+} 
 #score{
   font-size: xx-large;
   z-index: 1;
