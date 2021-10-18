@@ -35,7 +35,7 @@ body{
   height: 5vh;
   text-align: center;
   width: var(--centerWidth);
-  user-select: none;/*para que no se seleccione al clickear P*/
+  user-select: none;/*para que no se seleccione al clickear */
   margin: auto;
   transform: translateY(5vh);
 }
