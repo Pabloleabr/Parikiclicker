@@ -2,6 +2,7 @@
 :root{
   --bBackColor : white;
   --bBackColorH : #55555556;
+  --centerWidth : 60vw;
 }
 
 body{
@@ -14,24 +15,30 @@ body{
   height: 100vh;
 }
 #clickZone{
-  width: 60vw;
-  height: 90vh;
+  width: var(--centerWidth);
+  height: 89vh;
   display: flex;
   justify-content: center;
   user-select: none;
 }
+#upgrades{
+  width: var(--centerWidth);
+  height: 5vh;
+  background-color: black;
+  border: #555555 solid 0.5vh;
+}
 #score{
   font-size: xx-large;
-  transform: translateX(10vw);
   z-index: 1;
-  height: 10px;
+  height: 5vh;
   text-align: center;
-  width: 40vw;
+  width: var(--centerWidth);
   user-select: none;/*para que no se seleccione al clickear P*/
-  
+  margin: auto;
+  transform: translateY(5vh);
 }
 #mainImg{
-  max-width: 60vh;
+  max-width: var(--centerWidth);
   width: fit-content;
   height: fit-content;
   margin-top: 30vh;
@@ -117,7 +124,7 @@ body{
 }
 @media screen and (max-width: 450px){
   #left{
-    width: 0;
+    width: 0px;
   }
   #clickZone{
     width: 70vw;

@@ -3,7 +3,7 @@ const bMenu = document.getElementById("buttonMenu");//donde estan dentro todos l
 const clickZone = document.getElementById("mainImg");//la zona donde se clickea
 const Score = document.getElementById("score");//el contenedor de la puntuacion
 const mainImg = document.getElementById("mainImg");
-const COSTMULTI=0.5;
+const COSTMULTI=0.25;
 
 let Game ={//donde se guardan los datos del juego
     pFuerza: 0,
@@ -14,7 +14,10 @@ let Game ={//donde se guardan los datos del juego
     numProtes : 0,
     protesPower : 0.05,
     numCadenas : 0,
-    costCadenas : 100,
+    costCadenas : 200,
+    costAnime : 600,
+    numAnime : 0,
+    animePower : 1,
 } 
 if( localStorage.length != 0){//te carga los datos guardados
     //hay que modificarlo ya que si se anyade algo nuevo estos datos faltarian asi que necesita ser arreglado
@@ -31,7 +34,7 @@ function loadData(){
 * la funcion es la que se ejecutaria en el onclick y decuelce el elemento
 * button construido. 
 */
-function createButton(upgradeName, description,numero, cost, bClass, onclickFunction){
+function createButton(upgradeName, description, numero, cost, bClass, onclickFunction){
     let b = document.createElement("button");
     let sp = document.createElement("span");
     let infBox = document.createElement("div");
@@ -43,7 +46,7 @@ function createButton(upgradeName, description,numero, cost, bClass, onclickFunc
     p.innerText = description;
     infBox.appendChild(p);
     infBox.appendChild(num);
-    sp.innerText = cost;
+    sp.innerText = cost ? Math.round(cost) : "";
     b.innerText = upgradeName;
     b.appendChild(sp);
     b.onclick = onclickFunction;
@@ -86,10 +89,10 @@ La variable CONSTMULTI sirve para incrementar el precio de la mejora
 \ncost: para que se muestre el coste ya que asi tiene mas flexibilidad 
 a la hora de que boton crear)
 */
-buttonDeUnKg = createButton("+1kg \ncost: ","Añade 1Kg de peso (+0.2 al pulsar)", Game.numKg, Game.cost1kg, "upgradeButtons", function(){
+buttonDeUnKg = createButton("+1kg \ncost: ","Añade 1Kg de peso (+0.1 al pulsar)", Game.numKg, Game.cost1kg, "upgradeButtons", function(){
     let comp = Game.pFuerza>=Game.cost1kg;
     if(comp){//si tienes su coste te deja comprarlo
-    Game.clickPower +=0.2;
+    Game.clickPower +=0.1;
     Game.pFuerza -=Game.cost1kg;
     Game.cost1kg += Game.cost1kg*COSTMULTI;
     Game.numKg++;
@@ -134,6 +137,18 @@ buttonDeCadenas = createButton("Cadenas \ncost: ","Ahora levantas cadenas de hie
     }
     insuficientePuntos(buttonDeCadenas,comp);
 });
+buttonDeMotivacionAnime = createButton("Motivacion Anime \ncost: ","Te motivas leyendo anime y ahora puedes hacer ejercicio mientras duermes (+10.0 PF/s)",
+    Game.numAnime, Game.costAnime, "upgradeButtons", function(){
+    let comp = Game.pFuerza>=Game.costAnime;
+    if(comp){//si tienes su coste te deja comprarlo
+        Game.numAnime++;
+        Game.pFuerza -=Game.costAnime;
+        Game.costAnime += Game.costAnime*COSTMULTI;
+        buttonDeMotivacionAnime.childNodes[3].innerText = (Game.costAnime).toFixed(0);
+        buttonDeMotivacionAnime.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numAnime;
+    }
+        insuficientePuntos(buttonDeMotivacionAnime,comp);
+});
 //zona donde se agrega todos los botones
 //IMPORTANTE el orden en que se agregan es en que aparecen!
 bMenu.appendChild(buttonGuardar);
@@ -141,6 +156,7 @@ bMenu.appendChild(buttonReset);
 bMenu.appendChild(buttonDeUnKg);
 bMenu.appendChild(buttonDeProtes);
 bMenu.appendChild(buttonDeCadenas);
+bMenu.appendChild(buttonDeMotivacionAnime);
 
 clickZone.onclick  = (e) =>{
     Game.pFuerza+= Game.clickPower;
@@ -151,7 +167,7 @@ clickZone.onclick  = (e) =>{
 }
 
 setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos
-    Game.pFuerza += Game.protesPower*Game.numProtes;
+    Game.pFuerza += Game.protesPower*Game.numProtes + Game.animePower*Game.numAnime;
     setScore();
 },100);
 
@@ -162,5 +178,5 @@ setInterval(()=>{//animacion de presbanca
     }
 },2000)
 
-//recordatorio si algunos datos no te cargan bien prueba a hacer reset o localstorage.clear()
-console.log("recordatorio si algunos datos no te cargan bien prueba a hacer reset o localstorage.clear()");
+//recordatorio si algunos datos no te cargan bien prueba a hacer reset o localStorage.clear()
+console.log("recordatorio si algunos datos no te cargan bien prueba a hacer reset o localStorage.clear()");
