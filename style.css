@@ -41,12 +41,24 @@ body{
 }
 #mainImg{
   max-width: var(--centerWidth);
-  width: fit-content;
-  height: fit-content;
+  width: 30vw;
+  height: 30vw;
   margin-top: 30vh;
   user-select: none;
   cursor: pointer;
   -webkit-user-drag: none;
+}
+
+.imgSecundaria{
+  max-width: var(--centerWidth);
+  width: 16vw;
+  height: 14vw;
+  margin-top: 15vh;
+  user-select: none;
+  cursor: pointer;
+  -webkit-user-drag: none;
+  display: none;
+
 }
 .upgradeButtons{
   width: -webkit-fill-available;

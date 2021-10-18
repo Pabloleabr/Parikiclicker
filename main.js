@@ -3,6 +3,7 @@ const bMenu = document.getElementById("buttonMenu");//donde estan dentro todos l
 const clickZone = document.getElementById("mainImg");//la zona donde se clickea
 const Score = document.getElementById("score");//el contenedor de la puntuacion
 const mainImg = document.getElementById("mainImg");
+const imgSentadillas = document.querySelector(".imgSecundaria");
 const COSTMULTI=0.25;
 
 let Game ={//donde se guardan los datos del juego
@@ -17,7 +18,10 @@ let Game ={//donde se guardan los datos del juego
     costCadenas : 200,
     costAnime : 600,
     numAnime : 0,
-    animePower : 1,
+    animePower : 0.5,
+    costSentadillas : 1000,
+    numSentadillas : 0,
+    critico : 0,
 } 
 if( localStorage.length != 0){//te carga los datos guardados
     //hay que modificarlo ya que si se anyade algo nuevo estos datos faltarian asi que necesita ser arreglado
@@ -137,7 +141,8 @@ buttonDeCadenas = createButton("Cadenas \ncost: ","Ahora levantas cadenas de hie
     }
     insuficientePuntos(buttonDeCadenas,comp);
 });
-buttonDeMotivacionAnime = createButton("Motivacion Anime \ncost: ","Te motivas leyendo anime y ahora puedes hacer ejercicio mientras duermes (+10.0 PF/s)",
+buttonDeMotivacionAnime = createButton("Motivacion Anime \ncost: ",
+"Te motivas leyendo anime y ahora puedes hacer ejercicio mientras duermes (+5 PF/s)",
     Game.numAnime, Game.costAnime, "upgradeButtons", function(){
     let comp = Game.pFuerza>=Game.costAnime;
     if(comp){//si tienes su coste te deja comprarlo
@@ -149,6 +154,22 @@ buttonDeMotivacionAnime = createButton("Motivacion Anime \ncost: ","Te motivas l
     }
         insuficientePuntos(buttonDeMotivacionAnime,comp);
 });
+
+buttonDeSentadillas = createButton("Sentadillas \ncost: ","Te clonas para hacer más ejercicos y ganar posibilidad de crítico (+1%). 50 mejoras máx",
+    Game.numSentadillas, Game.costSentadillas, "upgradeButtons", function(){
+    let comp = Game.pFuerza>=Game.costSentadillas;
+    if(comp && Game.numSentadillas < 50){//si tienes su coste te deja comprarlo
+        Game.numSentadillas ++;
+        Game.critico += 1;
+        Game.pFuerza -=Game.costSentadillas;
+        Game.costSentadillas += Game.costSentadillas*COSTMULTI;
+        buttonDeSentadillas.childNodes[3].innerText = (Game.costSentadillas).toFixed(0);
+        buttonDeSentadillas.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numSentadillas;
+        //5% de critico se llama en clickzone.onclick
+    }
+        
+        insuficientePuntos(buttonDeSentadillas,comp);
+});
 //zona donde se agrega todos los botones
 //IMPORTANTE el orden en que se agregan es en que aparecen!
 bMenu.appendChild(buttonGuardar);
@@ -157,14 +178,25 @@ bMenu.appendChild(buttonDeUnKg);
 bMenu.appendChild(buttonDeProtes);
 bMenu.appendChild(buttonDeCadenas);
 bMenu.appendChild(buttonDeMotivacionAnime);
+bMenu.appendChild(buttonDeSentadillas);
 
 clickZone.onclick  = (e) =>{
-    Game.pFuerza+= Game.clickPower;
+
     setScore();
     let img = mainImg.src.split("/");
+    let imgS = imgSentadillas.src.split("/");
     img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";
-    popUpOnClick(e);  
-}
+    imgS[imgS.length-1] == "sentadillas1.png" ? imgSentadillas.src = "img/sentadillas2.png" :  imgSentadillas.src = "img/sentadillas1.png";
+    popUpOnClick(e);
+    //Critico:  
+    if (((Math.random() * 100 + Game.critico).toFixed(0)) >= 100){
+        Game.pFuerza += Game.clickPower * 100;
+    }
+    else{
+        Game.pFuerza+= Game.clickPower;
+    }
+
+    }
 
 setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos
     Game.pFuerza += Game.protesPower*Game.numProtes + Game.animePower*Game.numAnime;
@@ -176,7 +208,13 @@ setInterval(()=>{//animacion de presbanca
         let img = mainImg.src.split("/");
         img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";  
     }
+    if(Game.numSentadillas > 0){
+        let img = imgSentadillas.src.split("/");
+        img[img.length-1] == "sentadillas1.png" ? imgSentadillas.src = "img/sentadillas2.png" :  imgSentadillas.src = "img/sentadillas1.png";  
+        imgSentadillas.style.display="block";
+    }
 },2000)
+
 
 //recordatorio si algunos datos no te cargan bien prueba a hacer reset o localStorage.clear()
 console.log("recordatorio si algunos datos no te cargan bien prueba a hacer reset o localStorage.clear()");
