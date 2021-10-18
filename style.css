@@ -4,7 +4,9 @@
   --bBackColorH : #55555556;
   --centerWidth : 60vw;
 }
-
+main{
+  width: var(--centerWidth);
+}
 body{
   margin: 0;
   display: flex;
@@ -22,7 +24,7 @@ body{
   user-select: none;
 }
 #upgrades{
-  width: var(--centerWidth);
+  width: calc(var(--centerWidth) - 1vh ) ;
   height: 5vh;
   background-color: black;
   border: #555555 solid 0.5vh;
@@ -79,6 +81,7 @@ body{
   transition-duration: 0.4s;
   cursor: pointer;
   user-select: none;
+  margin: 0;
 }
 .dataButtons:hover{
   background-color: var(--bBackColorH);
