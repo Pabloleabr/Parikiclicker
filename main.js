@@ -59,9 +59,24 @@ function createButton(upgradeName, description, numero, cost, bClass, onclickFun
     b.appendChild(infBox);
     return b
 }
-
+function conversionNumGrandes(num){
+    let mil = num/1000;
+    let million = mil/1000;
+    let billion = million/1000000;
+    let res = num;
+    if(mil >= 1){
+        res = mil.toFixed(1) + "mil";
+    }
+    if(million >= 1){
+        res = million.toFixed(1) + "M";
+    }
+    if(billion >= 1){
+        res = billion.toFixed(1) + "B";
+    }
+    return res;
+}
 function setScore(){//funcion que te actualiza los pFuerza
-    Score.innerText= `Puntos de Fuerza: ${Game.pFuerza.toFixed(1)} (${(Game.pasivo*10).toFixed(1)}pF/s) `;
+    Score.innerText= `Puntos de Fuerza: ${conversionNumGrandes(Game.pFuerza.toFixed(1))} (${(conversionNumGrandes(Game.pasivo*10).toFixed(1))}pF/s) `;
 }
 
 //cambia el color del coste
