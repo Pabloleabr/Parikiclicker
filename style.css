@@ -97,7 +97,7 @@ body{
   background-color: var(--bBackColor);
   color: black;
   border: 1px solid var(--bBackColorH);
-  padding: 16px 32px;
+  padding: 16px 1vw;
   text-align: center;
   text-decoration: none;
   display: inline-block;
