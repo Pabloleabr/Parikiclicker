@@ -45,7 +45,7 @@ body{
   margin: auto;
   transform: translateY(5vh);
 }
-#mainImg{
+#mainImg, .imgSecundaria{
   max-width: var(--centerWidth);
   width: 25vw;
   height: 30vh;
@@ -59,13 +59,10 @@ body{
   width: 16vw;
   height: 14vh;
   margin-top: 15vh;
-  user-select: none;
-  cursor: pointer;
-  -webkit-user-drag: none;
   display: none;
 
 }
-.upgradeButtons{
+.upgradeButtons, .dataButtons{
   width: -webkit-fill-available;
   background-color: var(--bBackColor);
   color: black;
@@ -81,31 +78,17 @@ body{
   position: relative;
 
 }
-.upgradeButtons:hover{
-  background-color: var(--bBackColorH);
-  
-}
 .dataButtons{
   width: 10vw;
-  background-color: var(--bBackColor);
-  color: black;
-  border: 1px solid var(--bBackColorH);
-  padding: 16px 1vw;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  user-select: none;
-  margin: 0;
+}
+.upgradeButtons:hover{
+  background-color: var(--bBackColorH);
 }
 .dataButtons:hover{
   background-color: var(--bBackColorH);
-  
 }
 
-.popUpOnClick{
+.popUpOnClick, .popUpOnClickCrit{
   color: #ce5221;
   user-select: none;
   pointer-events: none;
@@ -114,8 +97,6 @@ body{
 }
 .popUpOnClickCrit{
   color: #8b0000;
-  user-select: none;
-  pointer-events: none;
   font-size:xx-large;
   animation: popUpCrit 1s ease-out;
   z-index: 2;
@@ -145,15 +126,15 @@ body{
 @keyframes popUp {
   100%{transform: translate(15px,-50px);}
 }
-@media screen and (max-width: 980px) {
-  .dataButtons{
-    width: 20vw;
-  }
-}
 @keyframes popUpCrit {
   100%{
     transform: translate(20px,-70px);
     font-size: 50px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .dataButtons{
+    width: 20vw;
   }
 }
 
