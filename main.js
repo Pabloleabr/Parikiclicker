@@ -98,7 +98,8 @@ La variable CONSTMULTI sirve para incrementar el precio de la mejora
 \ncost: para que se muestre el coste ya que asi tiene mas flexibilidad 
 a la hora de que boton crear)
 */
-buttonDeUnKg = createButton("+1kg \ncost: ","Añade 1Kg de peso (+0.1 al pulsar)", Game.numKg, Game.cost1kg, "upgradeButtons", function(){
+buttonDeUnKg = createButton("Aumentar 1kg \ncost: ","Añade 1Kg de peso a tus ejercicios (+0.1 al pulsar)", 
+                            Game.numKg, Game.cost1kg, "upgradeButtons", function(){
     let comp = Game.pFuerza>=Game.cost1kg;
     if(comp){//si tienes su coste te deja comprarlo
     Game.clickPower +=0.1;
@@ -146,7 +147,7 @@ buttonDeCadenas = createButton("Cadenas \ncost: ","Ahora levantas cadenas de hie
     }
     insuficientePuntos(buttonDeCadenas,comp);
 });
-buttonDeMotivacionAnime = createButton("Motivacion Anime \ncost: ",
+buttonDeMotivacionAnime = createButton("Leer Anime \ncost: ",
 "Te motivas leyendo anime y ahora puedes hacer ejercicio mientras duermes (+5 PF/s)",
     Game.numAnime, Game.costAnime, "upgradeButtons", function(){
     let comp = Game.pFuerza>=Game.costAnime;
@@ -160,7 +161,8 @@ buttonDeMotivacionAnime = createButton("Motivacion Anime \ncost: ",
         insuficientePuntos(buttonDeMotivacionAnime,comp);
 });
 
-buttonDeSentadillas = createButton("Sentadillas \ncost: ","Te clonas para hacer más ejercicos y ganar posibilidad de crítico (+0.1%). 500 mejoras máx",
+buttonDeSentadillas = createButton("Sentadillas \ncost: ",
+                                    "Te clonas para hacer más ejercicos y ganar posibilidad de crítico (+0.1%). 500 mejoras máx",
     Game.numSentadillas, Game.costSentadillas, "upgradeButtons", function(){
     let comp = Game.pFuerza>=Game.costSentadillas;
     if(comp && Game.numSentadillas < 500){//si tienes su coste te deja comprarlo
@@ -198,20 +200,20 @@ clickZone.onclick  = (e) =>{
         popUpOnClick(e, true);
     }
     else{
-        Game.pFuerza+= Game.clickPower;
+        Game.pFuerza += Game.clickPower;
         popUpOnClick(e, false);
     }
 
     }
-//Calcular ganancias pasivas para poder mostrarlas al usuario. Usamos la variable pasivo y actualizamos   
+ 
 
-setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos
+setInterval(() => {//bucle que se llama cada 0.5s. Calcula ganancias pasivas para poder mostrarlas al usuario. Usamos la variable pasivo 
     Game.pasivo = (Game.protesPower*Game.numProtes + Game.animePower*Game.numAnime);
     Game.pFuerza += Game.pasivo;
     setScore();
 },100);
 
-setInterval(()=>{//animacion de presbanca
+setInterval(()=>{//animaciones
     if(Game.numProtes > 0){
         let img = mainImg.src.split("/");
         img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";  
