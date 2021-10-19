@@ -39,7 +39,7 @@ function loadData(){
 * la funcion es la que se ejecutaria en el onclick y decuelce el elemento
 * button construido. 
 */
-function createButton(upgradeName, description, numero, cost, bClass, onclickFunction){
+function createButton(upgradeName, description, numero, cost, bClass, onClickFunction){
     let b = document.createElement("button");
     let sp = document.createElement("span");
     let infBox = document.createElement("div");
@@ -54,11 +54,24 @@ function createButton(upgradeName, description, numero, cost, bClass, onclickFun
     sp.innerText = cost ? Math.round(cost) : "";
     b.innerText = upgradeName;
     b.appendChild(sp);
-    b.onclick = onclickFunction;
+    b.onclick = onClickFunction;
     b.className = bClass;
     b.appendChild(infBox);
     return b
 }
+function createPassive(img, name, description, cost, bClass, onClickFunction){
+    let b = document.createElement("button");
+    let bImg = document.createElement(img);
+    let sp = document.createElement("span");
+    let infBox = document.createElement("div");
+    let p = document.createElement("p");
+    infBox.className ="infoBoxPassive";
+    p.innerText = name + '\n' + description;
+    sp.innerText = cost ? Math.round(cost) : "";
+    infBox.appendChild(p);
+
+}
+
 function conversionNumGrandes(num){
     let mil = num/1000;
     let million = mil/1000;
@@ -192,6 +205,9 @@ buttonDeSentadillas = createButton("Sentadillas \ncost: ",
         
         insuficientePuntos(buttonDeSentadillas,comp);
 });
+
+
+
 //zona donde se agrega todos los botones
 //IMPORTANTE el orden en que se agregan es en que aparecen!
 bMenu.appendChild(buttonGuardar);
