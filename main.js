@@ -160,14 +160,14 @@ buttonDeMotivacionAnime = createButton("Motivacion Anime \ncost: ",
         insuficientePuntos(buttonDeMotivacionAnime,comp);
 });
 
-buttonDeSentadillas = createButton("Sentadillas \ncost: ","Te clonas para hacer más ejercicos y ganar posibilidad de crítico (+1%). 50 mejoras máx",
+buttonDeSentadillas = createButton("Sentadillas \ncost: ","Te clonas para hacer más ejercicos y ganar posibilidad de crítico (+0.1%). 500 mejoras máx",
     Game.numSentadillas, Game.costSentadillas, "upgradeButtons", function(){
     let comp = Game.pFuerza>=Game.costSentadillas;
-    if(comp && Game.numSentadillas < 50){//si tienes su coste te deja comprarlo
+    if(comp && Game.numSentadillas < 500){//si tienes su coste te deja comprarlo
         Game.numSentadillas ++;
-        Game.critico += 1;
+        Game.critico += 0.1;
         Game.pFuerza -=Game.costSentadillas;
-        Game.costSentadillas += (Game.costSentadillas*COSTMULTI)*1.8;
+        Game.costSentadillas += (Game.costSentadillas*COSTMULTI)*2;
         buttonDeSentadillas.childNodes[3].innerText = (Game.costSentadillas).toFixed(0);
         buttonDeSentadillas.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numSentadillas;
         //1% de critico se llama en clickzone.onclick
