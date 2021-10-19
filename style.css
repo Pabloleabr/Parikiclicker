@@ -56,9 +56,8 @@ body{
 }
 
 .imgSecundaria{
-  max-width: var(--centerWidth);
   width: 16vw;
-  height: 14vw;
+  height: 14vh;
   margin-top: 15vh;
   user-select: none;
   cursor: pointer;
@@ -113,6 +112,14 @@ body{
   font-size: x-large;
   animation: popUp 1s ease-out;
 }
+.popUpOnClickCrit{
+  color: #8b0000;
+  user-select: none;
+  pointer-events: none;
+  font-size:xx-large;
+  animation: popUpCrit 1s ease-out;
+  z-index: 2;
+}
 
 .infoBox{
   display: none;
@@ -143,6 +150,13 @@ body{
     width: 20vw;
   }
 }
+@keyframes popUpCrit {
+  100%{
+    transform: translate(20px,-70px);
+    font-size: 50px;
+  }
+}
+
 @media screen and (max-width: 450px){
   #left{
     width: 0px;

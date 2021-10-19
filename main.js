@@ -73,11 +73,15 @@ function insuficientePuntos(button, pagoEfectuado){
     }, 1000);
 }
 
-function popUpOnClick(event) {
+function popUpOnClick(event, crit) {
     let p = document.createElement('p');
-    p.innerHTML = "+" + Game.clickPower.toFixed(1);
-    //Set CSS styles so it appears where you clicked (Top left corner)
-    p.className = "popUpOnClick";
+    if(crit){
+        p.innerHTML = "+" + (Game.clickPower * 100);
+        p.className = "popUpOnClickCrit";
+    }else{
+        p.innerHTML = "+" + Game.clickPower;
+        p.className = "popUpOnClick";
+    }
     p.style.position = 'absolute';
     p.style.left     = event.clientX + 'px';
     p.style.top      = (event.clientY-40) + 'px';
@@ -188,13 +192,14 @@ clickZone.onclick  = (e) =>{
     let imgS = imgSentadillas.src.split("/");
     img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";
     imgS[imgS.length-1] == "sentadillas1.png" ? imgSentadillas.src = "img/sentadillas2.png" :  imgSentadillas.src = "img/sentadillas1.png";
-    popUpOnClick(e);
     //Critico:  
     if (((Math.random() * 100 + Game.critico).toFixed(0)) >= 100 && Game.critico > 0){
         Game.pFuerza += Game.clickPower * 100;
+        popUpOnClick(e, true);
     }
     else{
         Game.pFuerza+= Game.clickPower;
+        popUpOnClick(e, false);
     }
 
     }
