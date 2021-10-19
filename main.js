@@ -61,7 +61,7 @@ function createButton(upgradeName, description, numero, cost, bClass, onclickFun
 }
 
 function setScore(){//funcion que te actualiza los pFuerza
-    Score.innerText= "Puntos de Fuerza: " + Game.pFuerza.toFixed(1);
+    Score.innerText= `Puntos de Fuerza: ${Game.pFuerza.toFixed(1)} (${Game.pasivo*10}pF/s) `;
 }
 
 //cambia el color del coste
@@ -201,8 +201,8 @@ clickZone.onclick  = (e) =>{
 //Calcular ganancias pasivas para poder mostrarlas al usuario. Usamos la variable pasivo y actualizamos   
 
 setInterval(() => {//bucle que se llama cada 0.5 seg para actualizar los datos
-    Game.pFuerza += Game.pasivo;
     Game.pasivo = (Game.protesPower*Game.numProtes + Game.animePower*Game.numAnime);
+    Game.pFuerza += Game.pasivo;
     setScore();
 },100);
 
@@ -218,9 +218,5 @@ setInterval(()=>{//animacion de presbanca
     }
 },2000)
 
-//Mostrar las mejoras
-setInterval(() => {document.getElementById("upgrades").innerHTML =`Puntos de Fuerza/Click: ${Game.clickPower.toFixed(1)}\n
-                                                                    Ganacias pasivas: ${Game.pasivo.toFixed(1)}\n`;
-}, 500)
 //recordatorio si algunos datos no te cargan bien prueba a hacer reset o localStorage.clear()
 console.log("recordatorio si algunos datos no te cargan bien prueba a hacer reset o localStorage.clear()");

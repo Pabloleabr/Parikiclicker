@@ -25,21 +25,15 @@ body{
   position: sticky;
 }
 #upgrades{
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
   background-color: black;
   color: white;
-  text-align: center;
-  display: block;
+  display: flex;
   height: 5vh;
-  font-size: large;
-/*   width: calc(var(--centerWidth) - 1vh ) ;
-  height: 5vh;
+  width: calc(var(--centerWidth) - 1vh ) ;
   background-color: black;
   border: #555555 solid 0.5vh;
-*/
+  user-select: none;
+
 } 
 #score{
   font-size: xx-large;
@@ -53,8 +47,8 @@ body{
 }
 #mainImg{
   max-width: var(--centerWidth);
-  width: 30vw;
-  height: 30vw;
+  width: 25vw;
+  height: 30vh;
   margin-top: 30vh;
   user-select: none;
   cursor: pointer;
