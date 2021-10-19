@@ -61,7 +61,7 @@ function createButton(upgradeName, description, numero, cost, bClass, onclickFun
 }
 
 function setScore(){//funcion que te actualiza los pFuerza
-    Score.innerText= `Puntos de Fuerza: ${Game.pFuerza.toFixed(1)} (${Game.pasivo*10}pF/s) `;
+    Score.innerText= `Puntos de Fuerza: ${Game.pFuerza.toFixed(1)} (${(Game.pasivo*10).toFixed(1)}pF/s) `;
 }
 
 //cambia el color del coste
@@ -76,10 +76,10 @@ function insuficientePuntos(button, pagoEfectuado){
 function popUpOnClick(event, crit) {
     let p = document.createElement('p');
     if(crit){
-        p.innerHTML = "+" + (Game.clickPower * 100);
+        p.innerHTML = "+" + (Game.clickPower * 100).toFixed(1);
         p.className = "popUpOnClickCrit";
     }else{
-        p.innerHTML = "+" + Game.clickPower;
+        p.innerHTML = "+" + (Game.clickPower).toFixed(1);
         p.className = "popUpOnClick";
     }
     p.style.position = 'absolute';
@@ -167,7 +167,7 @@ buttonDeSentadillas = createButton("Sentadillas \ncost: ","Te clonas para hacer 
         Game.numSentadillas ++;
         Game.critico += 1;
         Game.pFuerza -=Game.costSentadillas;
-        Game.costSentadillas += Game.costSentadillas*COSTMULTI;
+        Game.costSentadillas += (Game.costSentadillas*COSTMULTI)*1.8;
         buttonDeSentadillas.childNodes[3].innerText = (Game.costSentadillas).toFixed(0);
         buttonDeSentadillas.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numSentadillas;
         //1% de critico se llama en clickzone.onclick
