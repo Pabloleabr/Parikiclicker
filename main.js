@@ -5,6 +5,7 @@ const Score = document.getElementById("score");//el contenedor de la puntuacion
 const mainImg = document.getElementById("mainImg");
 const imgSentadillas = document.querySelector(".imgSecundaria");
 const passives = document.querySelector("#passives");
+const imgMoviSexy = document.querySelector("#msexy");
 const COSTMULTI=0.25;
 
 let Game ={//donde se guardan los datos del juego
@@ -25,7 +26,8 @@ let Game ={//donde se guardan los datos del juego
     critico : 0,
     pasivo : 0,
     msexy : false,
-    msexyCounter : 0
+    msexyCounter : 0,
+    globalMultibuff: 1
 } 
 if( localStorage.length != 0){//te carga los datos guardados
     //hay que modificarlo ya que si se anyade algo nuevo estos datos faltarian asi que necesita ser arreglado
@@ -62,7 +64,7 @@ function createButton(upgradeName, description, numero, cost, bClass, onClickFun
     b.appendChild(infBox);
     return b
 }
-function createPassive(img, name, description, cost, bClass, onClickFunction){
+function createPassive(img, name, description, cost, bClass, estado, onClickFunction){
     let b = document.createElement("button");
     let bImg = document.createElement("img");
     let sp = document.createElement("p");
@@ -70,12 +72,17 @@ function createPassive(img, name, description, cost, bClass, onClickFunction){
     let p = document.createElement("p");
     infBox.className ="infoBoxPassive";
     p.innerText = name + '\n' + description;
-    sp.innerText = cost ? "cost: " + Math.round(cost) : "";
-    sp.style.color = "#ce5221";
+    if(estado){
+        sp.innerText = "Comprado"
+        sp.style.color = "Green";
+    }else{
+        sp.innerText = cost ? "cost: " + Math.round(cost) : "";
+        sp.style.color = "#ce5221";
+    }
     infBox.appendChild(p);
     infBox.appendChild(sp);
     b.className = bClass;
-    bImg.src = "img/movimientoSexy1.png"
+    bImg.src = img;
     b.appendChild(infBox);
     b.appendChild(bImg);
     b.onclick = onClickFunction;
@@ -112,13 +119,21 @@ function insuficientePuntos(button, pagoEfectuado){
     }, 1000);
 }
 
+function calcuClick(crit){
+    res = Game.clickPower * Game.globalMultibuff;
+    if(crit){
+        res *= 100;
+    }
+    return res;
+}
+
 function popUpOnClick(event, crit) {
     let p = document.createElement('p');
     if(crit){
-        p.innerHTML = "+" + (Game.clickPower * 100).toFixed(1);
+        p.innerHTML = "+" + (calcuClick(true)).toFixed(1);
         p.className = "popUpOnClickCrit";
     }else{
-        p.innerHTML = "+" + (Game.clickPower).toFixed(1);
+        p.innerHTML = "+" + (calcuClick(false)).toFixed(1);
         p.className = "popUpOnClick";
     }
     p.style.position = 'absolute';
@@ -228,8 +243,8 @@ bMenu.appendChild(buttonDeCadenas);
 bMenu.appendChild(buttonDeMotivacionAnime);
 bMenu.appendChild(buttonDeSentadillas);
 
-passiveSexy = createPassive("img/movimientoSexy", "Movimiento Sexy", "El glorioso movimiento sexy hace que cada 1000 clicks actives tu poder sexy(x2 a to clicks)",
-                            20000, "passiveButtons", ()=>{
+passiveSexy = createPassive("img/movimientoSexy1.png", "Movimiento Sexy", "El glorioso movimiento sexy hace que cada 1000 clicks actives tu poder sexy(x5 a tus clicks durante 30s)",
+                            20000, "passiveButtons",Game.msexy , ()=>{
     let comp = Game.pFuerza>=20000 && !Game.msexy;
     if(comp){
         Game.msexy= true;
@@ -249,20 +264,34 @@ clickZone.onclick  = (e) =>{
     let imgS = imgSentadillas.src.split("/");
     img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";
     imgS[imgS.length-1] == "sentadillas1.png" ? imgSentadillas.src = "img/sentadillas2.png" :  imgSentadillas.src = "img/sentadillas1.png";
-    Game.msexyCounter++;
     //Critico:  
     if (((Math.random() * 100 + Game.critico).toFixed(0)) >= 100 && Game.critico > 0){
-        Game.pFuerza += Game.clickPower * 100;
+        Game.pFuerza += calcuClick(true);
         popUpOnClick(e, true);
     }
     else{
-        Game.pFuerza += Game.clickPower;
+        Game.pFuerza += calcuClick(false);
         popUpOnClick(e, false);
     }
     //msexy
-    if(Game.msexyCounter >= 1000){
-        Game.msexyCounter = 0;
-        //hay que anyadir mas codigo aqui y el multiplicador global para el efecto, etc...
+    if (Game.msexy) {
+        Game.msexyCounter++;
+        if(Game.msexyCounter >= 1000){
+            Game.msexyCounter = 0;
+            imgMoviSexy.style.display = "block";
+            Game.globalMultibuff = 5;
+            animationMSexy = setInterval(()=>{
+                let imgM = imgMoviSexy.src.split("/");
+                imgM[imgM.length-1]  == "movimientoSexy1.png" ? imgMoviSexy.src = "img/movimientoSexy2.png" :  imgMoviSexy.src = "img/movimientoSexy1.png";
+            },100)
+            
+            setTimeout(() => {
+                Game.msexyCounter = 0;
+                imgMoviSexy.style.display = "none";
+                Game.globalMultibuff = 1;
+                clearInterval(animationMSexy);
+            }, 30000);
+        }
     }
     }
  

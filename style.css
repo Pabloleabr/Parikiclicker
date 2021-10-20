@@ -24,6 +24,7 @@ body{
   user-select: none;
   position: sticky;
 }
+
 #passives{
   background-color: black;
   color: white;
@@ -147,6 +148,34 @@ body{
   display: block;
 }
 
+#msexy{
+  display: none;
+  position: absolute;
+  user-select: none;
+  -webkit-user-drag: none;
+  width: 30vw;
+  height: 15vw;
+  left: 35vw;
+  top: 65vh;
+  animation: sexyMove 5s infinite;
+}
+@keyframes sexyMove {
+  25%{
+    left: 15vw;
+    top: 30vh;
+    transform: rotate(45deg);
+  }
+  50%{
+    left: 35vw;
+    top: 0vh;
+    transform: rotate(180deg);
+  }
+  75%{
+    left: 65vw;
+    top: 30vh;
+    transform: rotate(270deg);
+  }
+}
 @keyframes popUp {
   100%{transform: translate(15px,-50px);}
 }
