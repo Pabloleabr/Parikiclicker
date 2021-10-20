@@ -4,6 +4,7 @@ const clickZone = document.getElementById("mainImg");//la zona donde se clickea
 const Score = document.getElementById("score");//el contenedor de la puntuacion
 const mainImg = document.getElementById("mainImg");
 const imgSentadillas = document.querySelector(".imgSecundaria");
+const passives = document.querySelector("#passives");
 const COSTMULTI=0.25;
 
 let Game ={//donde se guardan los datos del juego
@@ -23,6 +24,8 @@ let Game ={//donde se guardan los datos del juego
     numSentadillas : 0,
     critico : 0,
     pasivo : 0,
+    msexy : false,
+    msexyCounter : 0
 } 
 if( localStorage.length != 0){//te carga los datos guardados
     //hay que modificarlo ya que si se anyade algo nuevo estos datos faltarian asi que necesita ser arreglado
@@ -61,15 +64,23 @@ function createButton(upgradeName, description, numero, cost, bClass, onClickFun
 }
 function createPassive(img, name, description, cost, bClass, onClickFunction){
     let b = document.createElement("button");
-    let bImg = document.createElement(img);
-    let sp = document.createElement("span");
+    let bImg = document.createElement("img");
+    let sp = document.createElement("p");
     let infBox = document.createElement("div");
     let p = document.createElement("p");
     infBox.className ="infoBoxPassive";
     p.innerText = name + '\n' + description;
-    sp.innerText = cost ? Math.round(cost) : "";
+    sp.innerText = cost ? "cost: " + Math.round(cost) : "";
+    sp.style.color = "#ce5221";
     infBox.appendChild(p);
+    infBox.appendChild(sp);
+    b.className = bClass;
+    bImg.src = "img/movimientoSexy1.png"
+    b.appendChild(infBox);
+    b.appendChild(bImg);
+    b.onclick = onClickFunction;
 
+    return b;
 }
 
 function conversionNumGrandes(num){
@@ -207,7 +218,6 @@ buttonDeSentadillas = createButton("Sentadillas \ncost: ",
 });
 
 
-
 //zona donde se agrega todos los botones
 //IMPORTANTE el orden en que se agregan es en que aparecen!
 bMenu.appendChild(buttonGuardar);
@@ -218,6 +228,20 @@ bMenu.appendChild(buttonDeCadenas);
 bMenu.appendChild(buttonDeMotivacionAnime);
 bMenu.appendChild(buttonDeSentadillas);
 
+passiveSexy = createPassive("img/movimientoSexy", "Movimiento Sexy", "El glorioso movimiento sexy hace que cada 1000 clicks actives tu poder sexy(x2 a to clicks)",
+                            20000, "passiveButtons", ()=>{
+    let comp = Game.pFuerza>=20000 && !Game.msexy;
+    if(comp){
+        Game.msexy= true;
+        Game.pFuerza -= 20000;
+        console.log(passiveSexy.childNodes[0])
+        passiveSexy.childNodes[0].childNodes[1].innerText = "Comprado";
+        passiveSexy.childNodes[0].childNodes[1].style.color = "Green";
+    }
+})
+
+passives.appendChild(passiveSexy);
+
 clickZone.onclick  = (e) =>{
 
     setScore();
@@ -225,6 +249,7 @@ clickZone.onclick  = (e) =>{
     let imgS = imgSentadillas.src.split("/");
     img[img.length-1] == "presbanca1.png" ? mainImg.src = "img/presbanca2.png" :  mainImg.src = "img/presbanca1.png";
     imgS[imgS.length-1] == "sentadillas1.png" ? imgSentadillas.src = "img/sentadillas2.png" :  imgSentadillas.src = "img/sentadillas1.png";
+    Game.msexyCounter++;
     //Critico:  
     if (((Math.random() * 100 + Game.critico).toFixed(0)) >= 100 && Game.critico > 0){
         Game.pFuerza += Game.clickPower * 100;
@@ -234,7 +259,11 @@ clickZone.onclick  = (e) =>{
         Game.pFuerza += Game.clickPower;
         popUpOnClick(e, false);
     }
-
+    //msexy
+    if(Game.msexyCounter >= 1000){
+        Game.msexyCounter = 0;
+        //hay que anyadir mas codigo aqui y el multiplicador global para el efecto, etc...
+    }
     }
  
 

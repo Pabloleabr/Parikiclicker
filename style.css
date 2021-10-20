@@ -24,7 +24,7 @@ body{
   user-select: none;
   position: sticky;
 }
-#upgrades{
+#passives{
   background-color: black;
   color: white;
   display: flex;
@@ -62,7 +62,7 @@ body{
   display: none;
 
 }
-.upgradeButtons, .dataButtons{
+.upgradeButtons, .dataButtons, .passiveButtons{
   width: -webkit-fill-available;
   background-color: var(--bBackColor);
   color: black;
@@ -78,6 +78,17 @@ body{
   position: relative;
 
 }
+.passiveButtons, .passiveButtons img{
+  width: 3vw;
+  height: 3vh;
+  padding: 0 0;
+  margin: 0;
+  border-style: none;
+}
+.passiveButtons{
+  margin: 1vh;
+}
+
 .dataButtons{
   width: 10vw;
 }
@@ -102,7 +113,7 @@ body{
   z-index: 2;
 }
 
-.infoBox{
+.infoBox , .infoBoxPassive{
   display: none;
   position: absolute;
   background-color:rgb(26, 26, 26);
@@ -112,13 +123,26 @@ body{
   z-index: 1;
   
 }
+.infoBoxPassive{
+  transform: translate(0, -16vh);
+}
+
 .infoBox p{
   color: white;
   padding: 8px 12px;
   margin: 0%;
   display: block;
 }
+.infoBoxPassive p{
+  color: white;
+  padding: 8px 12px;
+  margin: 0%;
+  display: block;
+}
 
+.passiveButtons:hover .infoBoxPassive{
+  display: block;
+}
 .upgradeButtons:hover .infoBox{
   display: block;
 }
@@ -152,7 +176,12 @@ body{
     width: 30vw;
   }
   .infoBox{
-    transform: translate(-30vw, -5vh);
+    transform: translate(-40vw, -5vh);
+    width: 40vw;
+  }
+  .infoBoxPassive{
+    width: 50vw;
+    transform: translate(0, -25vh);
   }
   .dataButtons{
     width: 30vw;
