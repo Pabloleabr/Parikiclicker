@@ -10,6 +10,7 @@ main{
 body{
   margin: 0;
   display: flex;
+  overflow: hidden;
 }
 .margin{
   background-color: gainsboro;
@@ -203,6 +204,9 @@ body{
   }
   #right{
     width: 30vw;
+  }
+  #mainImg, .imgSecundaria{
+    margin-top: 40vh;
   }
   .infoBox{
     transform: translate(-40vw, -5vh);

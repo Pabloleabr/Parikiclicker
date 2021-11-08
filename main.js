@@ -7,6 +7,8 @@ const imgSentadillas = document.querySelector(".imgSecundaria");
 const passives = document.querySelector("#passives");
 const imgMoviSexy = document.querySelector("#msexy");
 const COSTMULTI=0.25;
+const clickAudio = new Audio("/audio/click.wav");
+
 
 let Game ={//donde se guardan los datos del juego
     pFuerza: 0,
@@ -257,8 +259,11 @@ passiveSexy = createPassive("img/movimientoSexy1.png", "Movimiento Sexy", "El gl
 
 passives.appendChild(passiveSexy);
 
+clickAudio.volume = 0.1
 clickZone.onclick  = (e) =>{
-
+    clickAudio.load();//allows overlaping of sounds
+    clickAudio.play();
+    
     setScore();
     let img = mainImg.src.split("/");
     let imgS = imgSentadillas.src.split("/");
