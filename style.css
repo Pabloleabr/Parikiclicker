@@ -10,8 +10,9 @@ main{
 body{
   margin: 0;
   display: flex;
+  overflow: hidden;
 }
-.margin{
+.margin, #canvas{
   background-color: gainsboro;
   width: 20vw;
   height: 100vh;
@@ -23,6 +24,11 @@ body{
   justify-content: center;
   user-select: none;
   position: sticky;
+}
+
+#canvas{
+  position: fixed;
+  
 }
 
 #passives{
@@ -57,9 +63,11 @@ body{
 }
 
 .imgSecundaria{
-  width: 16vw;
-  height: 14vh;
+  width: 8vw;
+  height: 15vh;
   margin-top: 15vh;
+  margin-left: 15vw;
+  position: fixed;
   display: none;
 
 }
@@ -93,11 +101,11 @@ body{
 .dataButtons{
   width: 10vw;
 }
-.upgradeButtons:hover{
+.upgradeButtons:hover, .dataButtons:hover{
   background-color: var(--bBackColorH);
 }
-.dataButtons:hover{
-  background-color: var(--bBackColorH);
+.upgradeButtons:active, .dataButtons:active{
+  background-color:#00000098
 }
 
 .popUpOnClick, .popUpOnClickCrit{
@@ -192,7 +200,7 @@ body{
 }
 
 @media screen and (max-width: 450px){
-  #left{
+  #left, #canvas{
     width: 0px;
   }
   :root{
@@ -203,6 +211,9 @@ body{
   }
   #right{
     width: 30vw;
+  }
+  #mainImg, .imgSecundaria{
+    margin-top: 40vh;
   }
   .infoBox{
     transform: translate(-40vw, -5vh);

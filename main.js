@@ -7,6 +7,14 @@ const imgSentadillas = document.querySelector(".imgSecundaria");
 const passives = document.querySelector("#passives");
 const imgMoviSexy = document.querySelector("#msexy");
 const COSTMULTI=0.25;
+const clickAudio = new Audio("/audio/click.wav");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext('2d');
+const imgBatido = document.getElementById('imgBatido');
+
+//necesario para que el canvas pinte en las escalas apropiadas
+canvas.setAttribute('width', canvas.offsetWidth);
+canvas.setAttribute('height', canvas.offsetHeight);
 
 let Game ={//donde se guardan los datos del juego
     pFuerza: 0,
@@ -38,6 +46,16 @@ function loadData(){
     Game = JSON.parse(localStorage.getItem("Game"));
 }
 
+
+var cupPosY = 10;  
+function drawCup(){
+    ctx.drawImage(imgBatido, 10, cupPosY);
+    cupPosY +=15; 
+}
+for (let i = 1; i <= Game.numProtes; i++) {
+    drawCup(); 
+}
+drawCup();
 /*
 * Esta funcion toma dos strings,el numero actual (uno de los valores num de Game),
 * un coste inicial, una classe para el buton y una funcion como parametros
@@ -174,6 +192,7 @@ buttonDeProtes = createButton("Batido de proteínas \ncost: ","Gracias a sus pro
         Game.costProtes += Game.costProtes*COSTMULTI;
         buttonDeProtes.childNodes[3].innerText = (Game.costProtes).toFixed(0);
         buttonDeProtes.childNodes[4].childNodes[1].innerText = "Tienes: " + Game.numProtes;
+        drawCup();
     }
         insuficientePuntos(buttonDeProtes,comp);
 });
@@ -257,8 +276,11 @@ passiveSexy = createPassive("img/movimientoSexy1.png", "Movimiento Sexy", "El gl
 
 passives.appendChild(passiveSexy);
 
+clickAudio.volume = 0.1
 clickZone.onclick  = (e) =>{
-
+    clickAudio.load();//allows overlaping of sounds
+    clickAudio.play();
+    
     setScore();
     let img = mainImg.src.split("/");
     let imgS = imgSentadillas.src.split("/");
